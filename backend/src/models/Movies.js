@@ -27,8 +27,7 @@ const moviesSchema = new Schema ({
         require: true
     },
     image: {
-        type: String,
-        require: true
+        type: String
     }
 },  {
     timestamps: true,

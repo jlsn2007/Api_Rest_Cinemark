@@ -19,7 +19,7 @@ app.use("/api/customers", customersRoutes)
 app.use("/api/employees", employeesRoutes)
 app.use("/api/movies", moviesRoutes)
 app.use("/api/registerCustomer", registerCustomerRoutes)
-app.use("/api/registrerEmployee", registerEmployeesRoutes);
+app.use("/api/registerEmployee", registerEmployeesRoutes);
 app.use("/api/login", loginRoutes);
 app.use("/api/logout", logoutRoutes);
 app.use("/api/recoveryPassword", recoveryPasswordRoutes);
