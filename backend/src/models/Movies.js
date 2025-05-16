@@ -2,7 +2,7 @@ import  { Schema, model } from "mongoose"
 
 const moviesSchema = new Schema ({
 
-    tittle: {
+    title: {
         type: String,
         require: true
     },
