@@ -5,8 +5,8 @@ import moviesRoutes from "./src/routes/movies.js"
 import loginRoutes from "./src/routes/login.js"
 import logoutRoutes from "./src/routes/logout.js"
 import cookieParser from "cookie-parser";
-import registerCustomerRoutes from "./src/routes/registrerCustomer.js"
-import registerEmployeesRoutes from "./src/routes/registrerEmployee.js"
+import registerCustomerRoutes from "./src/routes/registerCustomer.js"
+import registerEmployeesRoutes from "./src/routes/registerEmployee.js"
 import recoveryPasswordRoutes from "./src/routes/recoveryPassword.js"
 
 const app = express();
