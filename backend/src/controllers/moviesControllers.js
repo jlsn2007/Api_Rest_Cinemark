@@ -45,7 +45,7 @@ moviesControllers.deleteMovies = async (req, res) => {
 
 //Update
 moviesControllers.putMovies = async (req, res) => {
-    const { tittle, description, director, gender, year, duration, image } = req.body;
+    const { tittle, description, director, gender, year, duration } = req.body;
 
     let imageURL = ""
 
