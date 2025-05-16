@@ -19,7 +19,7 @@ moviesControllers.getMovies = async (req, res) => {
 //Insert
 moviesControllers.postMovies = async (req, res) => {
     try {
-        const { tittle, description, director, gender, year, duration } = req.body;
+        const { tittle, description, director, gender, year, duration, } = req.body;
         let imageURL = "";
 
         if (req.file) {
@@ -61,7 +61,7 @@ moviesControllers.deleteMovies = async (req, res) => {
 
 //Update
 moviesControllers.putMovies = async (req, res) => {
-    const { tittle, description, director, gender, year, duration } = req.body;
+    const { tittle, description, director, gender, year, duration, } = req.body;
 
     let imageURL = ""
 

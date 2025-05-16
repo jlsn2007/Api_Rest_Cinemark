@@ -120,8 +120,6 @@ passwordRecoveryController.newPassword = async(req, res) => {
 
             const hashedPassword = await bcryptjs.hash(newPassword, 10)
 
-            console.log({message: "contraaaa"})
-
             let updateUser;
 
             if (userType == "client") {
