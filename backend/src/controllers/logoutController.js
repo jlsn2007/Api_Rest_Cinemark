@@ -1,7 +1,6 @@
 const logoutController = {};
 
 logoutController.logout = async (req, res) => {
-    //Clean cookies to delete de token
 
     res.clearCookie("authToken");
 

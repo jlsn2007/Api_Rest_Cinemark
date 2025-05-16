@@ -38,6 +38,9 @@ const employeesSchema = new Schema ({
         type: String,
         require: true
     }
+},  {
+    timestamps: true,
+    strict: false
 
 })
 

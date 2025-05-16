@@ -30,7 +30,9 @@ const moviesSchema = new Schema ({
         type: String,
         require: true
     }
-
+},  {
+    timestamps: true,
+    strict: false
 })
 
 export default model("Movies", moviesSchema)

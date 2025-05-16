@@ -1,8 +1,8 @@
 import express from "express"
-import registrerEmployeesController from "../controllers/registreremployeescontrollers.js";
+import registerEmployeesController from "../controllers/registerEmployeesController";
 
 const router = express.Router();
 
-router.route("/").post(registrerEmployeesController.registrer)
+router.route("/").post(registerEmployeesController.registrer)
 
 export default router

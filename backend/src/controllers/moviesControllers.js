@@ -1,5 +1,14 @@
-const moviesControllers = {};
 import moviesModel from "../models/Movies.js"
+import { v2 as cloudinary } from "cloudinary";
+import { config } from "../config.js";
+
+cloudinary.config({
+    cloud_name: config.cloudinary.cloudinary_name,
+    api_key: config.cloudinary.cloudinary_api_key,
+    api_secret: config.cloudinary.cloudinary_api_secret
+})
+
+const moviesControllers = {};
 
 //Select
 moviesControllers.getMovies = async (req, res) => {
@@ -9,8 +18,21 @@ moviesControllers.getMovies = async (req, res) => {
 
 //Insert
 moviesControllers.postMovies = async (req, res) => {
-    const { tittle, description, director, gender, year, duration, image } = req.body;
-    const newMovies = new moviesModel({ tittle, description, director, gender, year, duration, image })
+    const { tittle, description, director, gender, year, duration} = req.body;
+    let imageURL = ""
+
+    if(req.file){
+        const result = await cloudinary.uploader.upload(
+            req.file.path,
+            {
+                folder: "public",
+                allowed_formats: ["png", "jpg", "jpeg"]
+            }
+        );
+        imageURL = result.secure_url
+    }
+    
+    const newMovies = new moviesModel({ tittle, description, director, gender, year, duration, image: imageURL })
     await newMovies.save()
     res.json({message: "Movie Inserted"})
 }
@@ -25,6 +47,19 @@ moviesControllers.deleteMovies = async (req, res) => {
 moviesControllers.putMovies = async (req, res) => {
     const { tittle, description, director, gender, year, duration, image } = req.body;
 
+    let imageURL = ""
+
+    if(req.file){
+        const result = await cloudinary.uploader.upload(
+            req.file.path,
+            {
+                folder: "public",
+                allowed_formats: ["png", "jpg", "jpeg"]
+            }
+        );
+        imageURL = result.secure_url
+    }
+
     await moviesModel.findByIdAndUpdate(req.params.id, {
         tittle,
         description,
@@ -32,7 +67,7 @@ moviesControllers.putMovies = async (req, res) => {
         gender,
         year,
         duration,
-        image
+        image: imageURL
     }, {new: true}
 );
 res.json({ message: "Movie Updated"});

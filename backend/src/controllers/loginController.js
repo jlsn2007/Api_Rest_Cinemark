@@ -1,27 +1,21 @@
 import customersModel from "../models/Customers.js"
 import employeesModel from "../models/Employees.js"
-import bcryptjs from "bcryptjs"; // Encriptar
-import jsonwebtoken from "jsonwebtoken"; // Token
+import bcryptjs from "bcryptjs";
+import jsonwebtoken from "jsonwebtoken"; 
 import { config } from "../config.js"
-
-//Array de funciones
 
 const loginController = {};
 
 loginController.login = async(req, res)=> {
 
-    //Pedimos las cosas
     const{email, password} = req.body;
 
     try{
 
-        //Validamos los 3 posibles nvl
-        //1. Admin, 2. Empleado, 3. Cliente
 
-        let userFound; //Guarda el usuario encontrado
-        let userType;  //Guardar tipo de usuario encontrado
+        let userFound; 
+        let userType;  
 
-        //1. Admin
         if(email === config.ADMIN.emailAdmin && password === config.ADMIN.password){
             
             userType = "admin";
@@ -29,11 +23,10 @@ loginController.login = async(req, res)=> {
 
         } else {
 
-            //2. Empleados
             userFound = await employeesModel.findOne({email})
             userType = "employee"
             if(!userFound){
-                //3. Cliente
+ 
                 userFound = await customersModel.findOne({email})
                 userType = "customer"
             }
@@ -44,8 +37,6 @@ loginController.login = async(req, res)=> {
             return res.json({message: "User not found 🔎"});
         }
 
-        // Validar la contraseña
-        // ONLY IF NOT ADMIN
         if(userType !== "admin"){
             const isMatch = await bcryptjs.compare(password, userFound.password)
             if(!isMatch){
@@ -53,8 +44,7 @@ loginController.login = async(req, res)=> {
             }
         }
 
-        // TOKEN
-        // Para validar que inició sesión
+
         jsonwebtoken.sign(
 
             {id: userFound._id, userType},
