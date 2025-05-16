@@ -18,24 +18,40 @@ moviesControllers.getMovies = async (req, res) => {
 
 //Insert
 moviesControllers.postMovies = async (req, res) => {
-    const { tittle, description, director, gender, year, duration} = req.body;
-    let imageURL = ""
+    try {
+        const { tittle, description, director, gender, year, duration } = req.body;
+        let imageURL = "";
 
-    if(req.file){
-        const result = await cloudinary.uploader.upload(
-            req.file.path,
-            {
-                folder: "public",
-                allowed_formats: ["png", "jpg", "jpeg"]
-            }
-        );
-        imageURL = result.secure_url
+        if (req.file) {
+            const result = await cloudinary.uploader.upload(
+                req.file.path,
+                {
+                    folder: "public",
+                    allowed_formats: ["png", "jpg", "jpeg"]
+                }
+            );
+            imageURL = result.secure_url;
+        }
+
+        const newMovies = new moviesModel({
+            tittle,
+            description,
+            director,
+            gender,
+            year,
+            duration,
+            image: imageURL
+        });
+
+        await newMovies.save();
+        res.json({ message: "Movie Inserted" });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
     }
-    
-    const newMovies = new moviesModel({ tittle, description, director, gender, year, duration, image: imageURL })
-    await newMovies.save()
-    res.json({message: "Movie Inserted"})
-}
+};
+
 
 //Delete
 moviesControllers.deleteMovies = async (req, res) => {
